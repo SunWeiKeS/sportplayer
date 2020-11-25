@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 这个文件用于代理实现类-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vicsun.sportplayer.dao.MenuDao">
+    <!--关系映射-->
+    <resultMap id="menuMap" type="com.vicsun.sportplayer.bean.MainMenu">
+        <!--column数据库中，property实体中-->
+        <id column="id" property="id"></id>
+        <result column="title" property="title"></result>
+        <result column="path" property="path"></result>
+        <collection property="sList" ofType="com.vicsun.sportplayer.bean.SubMenu">
+            <id column="sid" property="id"></id>
+            <result column="stitle" property="title"></result>
+            <result column="spath" property="path"></result>
+        </collection>
+
+    </resultMap>
+    <select id="getMenus" resultMap="menuMap">
+        select mm.*,sm.id as sid,sm.title as stitle,sm.path as spath
+        from mainmenu mm,submenu sm
+        where mm.id=sm.mid;
+    </select>
+
+</mapper>
